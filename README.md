@@ -8,11 +8,6 @@ Seamlessly track attendance, assess performance, and provide feedback. <br>
 Access records, view marks, and communicate effortlessly.
 </h3>
 
-<br>
-[Youtube Video](https://youtu.be/ol650KwQkgY?si=rKcboqSv3n-e4UbC)
-<br><br>
-[LinkedIn](https://www.linkedin.com/in/yogndr/)
-
 # About
 
 The School Management System is a web-based application built using the MERN (MongoDB, Express.js, React.js, Node.js) stack. It aims to streamline school management, class organization, and facilitate communication between students, teachers, and administrators.
@@ -39,11 +34,6 @@ The School Management System is a web-based application built using the MERN (Mo
 
 <br>
 
-# Installation
-
-```sh
-git clone https://github.com/Yogndrr/MERN-School-Management-System.git
-```
 Open 2 terminals in separate windows/tabs.
 
 Terminal 1: Setting Up Backend 
@@ -119,29 +109,29 @@ When attempting to delete items, you may encounter a popup message stating, "Sor
 2. If you haven't made any changes, you should find the `deleteUser` function at line 71. It may be commented out. It might look like this:
 
 ```javascript
-// export const deleteUser = (id, address) => async (dispatch) => {
-//     dispatch(getRequest());
+export const deleteUser = (id, address) => async (dispatch) => {
+    dispatch(getRequest());
 
-//     try {
-//         const result = await axios.delete(`${process.env.REACT_APP_BASE_URL}/${address}/${id}`);
-//         if (result.data.message) {
-//             dispatch(getFailed(result.data.message));
-//         } else {
-//             dispatch(getDeleteSuccess());
-//         }
-//     } catch (error) {
-//         dispatch(getError(error));
-//     }
-// }
+    try {
+        const result = await axios.delete(`${process.env.REACT_APP_BASE_URL}/${address}/${id}`);
+        if (result.data.message) {
+            dispatch(getFailed(result.data.message));
+        } else {
+            dispatch(getDeleteSuccess());
+        }
+    } catch (error) {
+        dispatch(getError(error));
+    }
+}
 ```
 
 3. Uncomment above `deleteUser` function and comment out this `deleteUser` function that is currently running from line 87 to line 90 :
 
 ```javascript
-export const deleteUser = (id, address) => async (dispatch) => {
-    dispatch(getRequest());
-    dispatch(getFailed("Sorry the delete function has been disabled for now."));
-}
+// export const deleteUser = (id, address) => async (dispatch) => {
+//     dispatch(getRequest());
+//     dispatch(getFailed("Sorry the delete function has been disabled for now."));
+// }
 ```
 
 4. If you have previously modified the code, you may find the `deleteUser` functions at different lines. In this case, uncomment the original code and comment out the current one.
@@ -152,14 +142,14 @@ export const deleteUser = (id, address) => async (dispatch) => {
    
 ```javascript
 const deleteHandler = (deleteID, address) => {
-  console.log(deleteID);
-  console.log(address);
-  setMessage("Sorry, the delete function has been disabled for now.");
-  setShowPopup(true);
-  // dispatch(deleteUser(deleteID, address))
-  //   .then(() => {
-  //     dispatch(getAllSclasses(adminID, "Sclass"));
-  //   })
+  // console.log(deleteID);
+  // console.log(address);
+  // setMessage("Sorry, the delete function has been disabled for now.");
+  // setShowPopup(true);
+  dispatch(deleteUser(deleteID, address))
+    .then(() => {
+      dispatch(getAllSclasses(adminID, "Sclass"));
+    })
 }
 ```
 
